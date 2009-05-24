@@ -1,0 +1,68 @@
+About:
+    Name:   fanedit.info
+    Version:    0.1
+    Site:   [http://fanedit.info,http://fanedit.org]
+    Author: JP
+    Description:    Gives access to Fanedit.info information
+    LastChecked:   2009-05-24
+    CacheTimeout:   nil
+
+Functions:
+    Search:
+        requires:
+            q:
+                format: .+
+                about:  The search string
+        optional:
+            page:
+                format: \[1-9\]\d*
+                default:    1
+                about:  The page of results
+        request:
+            url:    http://fanedit.info/page/%{page}/?s=%{q}
+        returns:
+            Fanedits:
+                _base:  //div[@class='post']
+                faneditid:
+                    xpath:  ./a[@rel='bookmark']/attribute::href
+                    regex:  fanedit\.info/(\d+)/
+                Title:
+                    xpath:  ./a[@rel='bookmark']
+    Details:
+        requires:
+            faneditid:
+                format: \d+
+                about:  The Fanedit id (on fanedit.info, *not* fanedit.org)
+        request:
+            url:    http://fanedit.info/%{faneditid}/
+        returns:
+            fanedit_org_id:
+                xpath: //div/h1/a/attribute::href
+                regex: fanedit\.org/([0-9]+)/
+            RapidshareLinks:
+                _base:  //table/following::img[@title='RS']/following::ul[1]/li
+                dlcrar:
+                    xpath: ./a/attribute::href
+                Description:
+                    xpath:  ./a
+                Size:
+                    xpath: ./a/following::text()[1]
+                    regex: \(([0-9]+\.?[0-9]*\ [G|M]B)\)
+            BitTorrentLinks:
+                _base:  //table/following::img[@title='BT']/following::ul[1]/li
+                torrent:
+                    xpath: ./a/attribute::href
+                Description:
+                    xpath:  ./a
+                Size:
+                    xpath: ./a/following::text()[1]
+                    regex: \(([0-9]+\.?[0-9]*\ [G|M]B)\)
+            MegaUploadLinks:
+                _base:  //table/following::img[@title='MU']/following::ul[1]/li
+                dlcrar:
+                    xpath: ./a/attribute::href
+                Description:
+                    xpath:  ./a
+                Size:
+                    xpath: ./a/following::text()[1]
+                    regex: \(([0-9]+\.?[0-9]*\ [G|M]B)\)

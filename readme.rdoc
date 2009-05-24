@@ -1,0 +1,6 @@
+= SlyPI
+These are example SlyPIs for use with the SlyPI gem or webserver:
+gem:: http://github.com/jphastings/SlyPI
+webserver:: http://github.com/jphastings/slypi-webserver
+
+The aim is to make accessing data on websites without apis easy and quickly modifyable if the site layout changes.
