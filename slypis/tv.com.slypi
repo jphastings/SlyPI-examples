@@ -1,10 +1,10 @@
 About:
     Name:   TV.com
-    Version:    0.9
+    Version:    0.9.2
     Site:   http://tv.com/
     Author: JP
     Description:    Allows access to TV.com's information on Television Shows and Episodes.
-    LastChecked:   2009-05-07
+    LastChecked:   2009-10-08
     CacheTimeout:   nil
 
 Functions:
@@ -102,13 +102,13 @@ Functions:
             url:    http://www.tv.com/search.php?type=Search&stype=ajax_search&qs=%{q}&search_type=program&pg_results=%{page}
         returns:
             Shows:
-                _base:  //ul[@class="search_results_list"]/li
+                _base:  //ul[@class="search_results_list cls"]/li
                 showid:
-                    xpath:  .//h3[@class="title"]/a/attribute::href|.//a[@class="title"]/attribute::href
+                    xpath:  .//h2/a/attribute::href
                     regex:  show/(\d+)/
                     comment:    This is a nasty hack, I need proper XPath support!
                 Title:
-                    xpath:  .//h3[@class="title"]/a|.//a[@class="title"]
+                    xpath:  .//h2/a
                 Description:
                     xpath:  .//a[@class="more"]/..|.//p[@class="deck"]
                     regex:  ^(.+?)( more \xC2\xBB)?$
